@@ -1,9 +1,24 @@
+/* Tailwind & DaisyUI */
 @import "tailwindcss";
 @plugin "daisyui";
 
+/* DaisyUI custom theme */
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  --color-primary: blue;
+
+  --color-primary: #632EE3;
+  /* base for components */
   --color-secondary: teal;
+}
+
+/* Custom Gradient Primary Button */
+.btn-primary {
+  background-image: linear-gradient(90deg, #632EE3, #9F62F2);
+  border: none;
+  color: white !important;
+}
+
+.btn-primary:hover {
+  background-image: linear-gradient(90deg, #5530c9, #8c55da);
 }

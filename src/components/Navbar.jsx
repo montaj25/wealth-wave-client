@@ -6,10 +6,10 @@ const Navbar = () => {
     const { user, signOutUser } = use(AuthContext);
 
 
-    const handleSignOut = () =>{
+    const handleSignOut = () => {
         signOutUser()
-        .then()
-        .catch()
+            .then()
+            .catch()
     }
 
     const links = <>
@@ -47,8 +47,8 @@ const Navbar = () => {
             <div className="navbar-end">
                 {
                     user ?
-                        <a onClick={handleSignOut} className="btn">Sign Out</a> :
-                        <Link to='/login'>Login</Link>
+                        <a onClick={handleSignOut} className="btn btn-primary">Sign Out</a> :
+                        <Link className='btn btn-primary' to='/login'>Login</Link>
                 }
             </div>
         </div>
