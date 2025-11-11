@@ -7,7 +7,7 @@ const Home = () => {
     return (
         <div>
             <HeroBanner></HeroBanner>
-            <Overview></Overview>
+            <Overview email="hero1@gmail.com"></Overview>
             <FinanceCardSections></FinanceCardSections>
         </div>
     );
