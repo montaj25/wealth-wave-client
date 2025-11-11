@@ -7,6 +7,12 @@ import { RouterProvider } from "react-router/dom";
 import RootLayout from './layouts/RootLayout.jsx';
 import Home from './components/Home.jsx';
 import MyTransactions from './pages/MyTransactions.jsx';
+import AuthProvider from './contexts/AuthProvider.jsx';
+import Register from './components/Register.jsx';
+import Login from './components/Login.jsx';
+import AddTransaction from './pages/AddTransaction.jsx';
+import ErrorPage from './pages/ErrorPage.jsx';
+import Reports from './pages/Reports.jsx';
 
 
 const router = createBrowserRouter([
@@ -21,6 +27,26 @@ const router = createBrowserRouter([
       {
         path: '/myTransactions',
         Component: MyTransactions
+      },
+      {
+        path: 'register',
+        Component: Register
+      },
+      {
+        path: 'login',
+        Component: Login
+      },
+      {
+        path: 'addTransaction',
+        element: <AddTransaction></AddTransaction>
+      },
+      {
+        path: 'reports',
+        element: <Reports></Reports>
+      },
+      {
+        path: '*',
+        element: <ErrorPage></ErrorPage>
       }
     ]
   },
@@ -28,6 +54,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>,
 )
