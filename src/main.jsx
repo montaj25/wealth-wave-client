@@ -13,6 +13,7 @@ import Login from './components/Login.jsx';
 import AddTransaction from './pages/AddTransaction.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import Reports from './pages/Reports.jsx';
+import Details from './pages/Details.jsx';
 
 
 const router = createBrowserRouter([
@@ -43,6 +44,11 @@ const router = createBrowserRouter([
       {
         path: 'reports',
         element: <Reports></Reports>
+      },
+      {
+        path: 'transactionDetails/:id',
+        loader: ({params}) => fetch(`http://localhost:3000/transactions/${params.id}`),
+        Component: Details
       },
       {
         path: '*',
