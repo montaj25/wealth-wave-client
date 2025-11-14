@@ -14,7 +14,7 @@ import AddTransaction from './pages/AddTransaction.jsx';
 import ErrorPage from './pages/ErrorPage.jsx';
 import Reports from './pages/Reports.jsx';
 import Details from './pages/Details.jsx';
-import UpdateTransaction from './pages/UpdateTransaction.jsx';
+import UpdatedTransaction from './pages/UpdatedTransaction.jsx';
 
 
 const router = createBrowserRouter([
@@ -41,11 +41,6 @@ const router = createBrowserRouter([
       {
         path: 'addTransaction',
         element: <AddTransaction></AddTransaction>
-      },
-      {
-        path: 'updatedTransaction/:id',
-        loader: ({params}) => fetch(`http://localhost:3000/transactions/${params.id}`),
-        element: <UpdateTransaction></UpdateTransaction>
       },
       {
         path: 'reports',
