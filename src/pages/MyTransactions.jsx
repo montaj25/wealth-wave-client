@@ -30,13 +30,21 @@ const MyTransactions = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                
-                console.log("btn delete")
-            //     Swal.fire({
-            //         title: "Deleted!",
-            //         text: "Your file has been deleted.",
-            //         icon: "success"
-            //     });
+                fetch(`http://localhost:3000/transactions/${_id}`, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.deletedCount) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your transaction has been deleted.",
+                                icon: "success"
+                            });
+                            const remainingTransactions = transactions.filter(transaction => transaction._id !== _id);
+                            setTransactions(remainingTransactions)
+                        }
+                    })
             }
         });
     }
@@ -63,7 +71,9 @@ const MyTransactions = () => {
 
                             <div className="card-actions justify-between mt-4">
                                 <Link to={`/transactionDetails/${t._id}`} className="btn btn-sm btn-info">View Details</Link>
-                                <button className="btn btn-sm btn-warning">Update</button>
+                                <Link
+                                    to={`/updateTransaction/${t._id}`}
+                                    className="btn btn-sm btn-warning">Update</Link>
                                 <button
                                     onClick={() => handleDelete(t._id)}
                                     className="btn btn-sm btn-error">Delete</button>
