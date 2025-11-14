@@ -15,6 +15,8 @@ import ErrorPage from './pages/ErrorPage.jsx';
 import Reports from './pages/Reports.jsx';
 import Details from './pages/Details.jsx';
 import UpdatedTransaction from './pages/UpdatedTransaction.jsx';
+import Profile from './pages/Profile.jsx';
+
 
 
 const router = createBrowserRouter([
@@ -31,25 +33,34 @@ const router = createBrowserRouter([
         Component: MyTransactions
       },
       {
-        path: 'register',
+        path: '/register',
         Component: Register
       },
       {
-        path: 'login',
+        path: '/login',
         Component: Login
       },
       {
-        path: 'addTransaction',
+        path: '/addTransaction',
         element: <AddTransaction></AddTransaction>
       },
       {
-        path: 'reports',
+        path: '/reports',
         element: <Reports></Reports>
       },
       {
-        path: 'transactionDetails/:id',
+        path: '/transactionDetails/:id',
         loader: ({ params }) => fetch(`http://localhost:3000/transactions/${params.id}`),
         Component: Details
+      },
+      {
+        path: '/updatedTransaction/:id',
+        loader: ({ params }) => fetch(`http://localhost:3000/transactions/${params.id}`),
+        element: <UpdatedTransaction></UpdatedTransaction>
+      },
+      {
+        path: '/profile',
+        element: <Profile></Profile>
       },
       {
         path: '*',

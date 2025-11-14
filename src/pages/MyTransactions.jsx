@@ -72,7 +72,7 @@ const MyTransactions = () => {
                             <div className="card-actions justify-between mt-4">
                                 <Link to={`/transactionDetails/${t._id}`} className="btn btn-sm btn-info">View Details</Link>
                                 <Link
-                                    to={`/updateTransaction/${t._id}`}
+                                    to={`/updatedTransaction/${t._id}`}
                                     className="btn btn-sm btn-warning">Update</Link>
                                 <button
                                     onClick={() => handleDelete(t._id)}
