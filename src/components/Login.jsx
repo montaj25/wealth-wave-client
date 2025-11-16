@@ -1,13 +1,15 @@
 import React, { use, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false)
-
     const { signInWithGoogle, signInUser } = use(AuthContext)
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname;
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -36,6 +38,7 @@ const Login = () => {
                     icon: "success",
                     title: "Login Successful!",
                 });
+                navigate(from, { replace: true });
             })
             .catch((error) => {
                 console.log(error)
@@ -73,6 +76,7 @@ const Login = () => {
                             icon: "success",
                             title: "Google Login Successful!",
                         });
+                        navigate(from, { replace: true });
                     })
 
 

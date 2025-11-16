@@ -1,17 +1,11 @@
-import React, { use } from 'react';
-import { Link, NavLink, useNavigate } from 'react-router';
+import React, { use, useState } from 'react';
+import { Link, NavLink } from 'react-router';
 import { AuthContext } from '../contexts/AuthContext';
 
 const Navbar = () => {
     const { user, signOutUser } = use(AuthContext);
+    const [dropdownOpen, setDropDownOpen] = useState(false);
     // console.log(user)
-
-
-    const handleSignOut = () => {
-        signOutUser();
-
-    }
-
     const links = <>
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/login'>Login</NavLink></li>
@@ -19,15 +13,14 @@ const Navbar = () => {
         <li><NavLink to='/myTransactions'>My Transactions</NavLink></li>
         <li><NavLink to='/reports'>Reports</NavLink></li>
         <li><NavLink to='/profile'>Profile</NavLink></li>
-        {/* {
-            user && <>
-                <li><NavLink to='/addTransaction'>Add Transaction</NavLink></li>
-                <li><NavLink to='/myTransactions'>My Transactions</NavLink></li>
-                <li><NavLink to='/reports'>Reports</NavLink></li>
-                <li><NavLink to='/profile'>Profile</NavLink></li>
-            </>
-        } */}
     </>
+    const handleSignOut = () => {
+        signOutUser();
+        setDropDownOpen(false)
+    }
+    const toggleDropdown = () => {
+        setDropDownOpen(!dropdownOpen)
+    }
     return (
         <div className="navbar bg-base-100 shadow-sm">
             <div className="navbar-start">
@@ -51,14 +44,32 @@ const Navbar = () => {
             <div className="navbar-end gap-3">
                 {
                     user ?
-                        (<img src={user?.photoURL} alt="Photo" className='w-10 h-10 rounded-full' />) :
-                        (<p>photoURL</p>)
+                        (
+                    <>
+                        <img
+                            src={user?.photoURL}
+                            alt="Profile"
+                            className="w-10 h-10 rounded-full cursor-pointer"
+                            onClick={toggleDropdown}
+                        />
+
+                        {/* Dropdown */}
+                        {dropdownOpen && (
+                            <div className="absolute right-0 mt-2 w-52 bg-white shadow-md rounded-lg p-4 z-50">
+                                <p className="font-semibold">{user.displayName}</p>
+                                <p className="text-sm text-gray-600">{user.email}</p>
+                                <button
+                                    onClick={handleSignOut}
+                                    className="btn btn-sm btn-primary mt-2 w-full"
+                                >
+                                    Sign Out
+                                </button>
+                            </div>
+                        )}
+                    </>
+                ) :
+                    (<Link className='btn btn-primary' to='/login'>Login</Link>)
                 },
-                {
-                    user ?
-                        <button onClick={handleSignOut} className="btn btn-primary">Sign Out</button> :
-                        <Link className='btn btn-primary' to='/login'>Login</Link>
-                }
             </div>
         </div>
     );

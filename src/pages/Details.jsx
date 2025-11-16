@@ -3,7 +3,7 @@ import { useLoaderData } from 'react-router';
 
 const Details = () => {
     const { type, description, amount, date, category, categoryTotal } = useLoaderData()
-    // console.log(transaction)
+    // console.log(categoryTotal)
     return (
         <div className='max-w-2xl mx-auto mt-15 card bg-base-200 shadow-2xl'>
             <div className='card-body'>
