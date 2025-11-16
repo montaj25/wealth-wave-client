@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 const MyProfile = () => {
     const { user } = use(AuthContext);
-    // console.log(user)
+    console.log(user)
 
     const [name, setName] = useState(user?.displayName || "");
     const [photo, setPhoto] = useState(user?.photoURL || "");

@@ -1,22 +1,69 @@
-import React from 'react';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import React, { useState } from 'react';
 import { Link } from 'react-router';
+import { auth } from '../firebase/firebase.init';
+import Swal from 'sweetalert2';
 
 const Register = () => {
+
+    const handleRegister = (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const name = form.name.value;
+        // const photoURL = form.photoURL.value;
+        const email = form.email.value;
+        const password = form.password.value;
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+        if (!passwordPattern.test(password)) {
+            return Swal.fire({
+                icon: "error",
+                title: "Invalid Password",
+                html: `
+                Password must have:
+                <ul class="text-left mt-2">
+                    <li> At least one uppercase letter</li>
+                    <li> At least one lowercase letter</li>
+                    <li> Minimum length of 6 characters</li>
+                </ul>
+            `,
+            });
+        }
+        Swal.fire({
+            icon: "success",
+            title: "Registered Successfully!",
+            text: `Welcome, ${name}!`,
+            timer: 2000,
+            showConfirmButton: false,
+        }).then(() => {
+            // You can redirect to login page or dashboard here
+            form.reset();
+        });
+        // console.log(name, email, password, photoURL)
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(result => {
+                console.log('after create', result.user)
+            })
+            .then(error => {
+                console.log(error.)
+            })
+    }
+
     return (
         <div className="card bg-base-300 w-full mx-auto max-w-sm shrink-0 shadow-2xl mt-16">
             <h1 className="text-5xl font-bold text-center my-8">Register now!</h1>
             <div className="card-body">
-                <form>
+                <form onSubmit={handleRegister}>
                     <fieldset className="fieldset">
                         <label className="label">Name</label>
-                        <input type="text" className="input" placeholder="Name" />
+                        <input type="text" name='name' className="input" placeholder="Name" />
                         <label className="label">Photo URL</label>
-                        <input type="text" className="input" placeholder="Photo URL" />
+                        <input type="text" name='photoURL' className="input" placeholder="Photo URL" />
                         <label className="label">Email</label>
-                        <input type="email" className="input" placeholder="Email" />
+                        <input type="email" name='email' className="input" placeholder="Email" />
                         <label className="label">Password</label>
-                        <input type="password" className="input" placeholder="Password" />
-                        <button className="btn btn-neutral mt-4">Register</button>
+                        <input type="password" name='password' className="input" placeholder="Password" />
+                        <button type='submit' className="btn btn-neutral mt-4">Register</button>
                     </fieldset>
                 </form>
                 <p>Haven't Any Account? please <Link to='/login'><span className='text-primary'>Login</span></Link> </p>

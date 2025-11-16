@@ -4,6 +4,7 @@ import { AuthContext } from '../contexts/AuthContext';
 
 const Navbar = () => {
     const { user, signOutUser } = use(AuthContext);
+    console.log(user)
 
 
     const handleSignOut = () => {
@@ -15,15 +16,18 @@ const Navbar = () => {
     const links = <>
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/login'>Login</NavLink></li>
-
-        {
+        <li><NavLink to='/addTransaction'>Add Transaction</NavLink></li>
+        <li><NavLink to='/myTransactions'>My Transactions</NavLink></li>
+        <li><NavLink to='/reports'>Reports</NavLink></li>
+        <li><NavLink to='/profile'>Profile</NavLink></li>
+        {/* {
             user && <>
                 <li><NavLink to='/addTransaction'>Add Transaction</NavLink></li>
                 <li><NavLink to='/myTransactions'>My Transactions</NavLink></li>
                 <li><NavLink to='/reports'>Reports</NavLink></li>
                 <li><NavLink to='/profile'>Profile</NavLink></li>
             </>
-        }
+        } */}
     </>
     return (
         <div className="navbar bg-base-100 shadow-sm">
@@ -45,10 +49,15 @@ const Navbar = () => {
                     {links}
                 </ul>
             </div>
-            <div className="navbar-end">
+            <div className="navbar-end gap-3">
                 {
                     user ?
-                        <a onClick={handleSignOut} className="btn btn-primary">Sign Out</a> :
+                        (<img src={user?.photoURL} alt="Photo" className='w-10 h-10 rounded-full' />) :
+                        (<p>photoURL</p>)
+                },
+                {
+                    user ?
+                        <button onClick={handleSignOut} className="btn btn-primary">Sign Out</button> :
                         <Link className='btn btn-primary' to='/login'>Login</Link>
                 }
             </div>

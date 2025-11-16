@@ -16,6 +16,7 @@ import Reports from './pages/Reports.jsx';
 import Details from './pages/Details.jsx';
 import UpdatedTransaction from './pages/UpdatedTransaction.jsx';
 import Profile from './pages/Profile.jsx';
+import PrivateRoute from './Routes/PrivateRoute.jsx';
 
 
 
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/myTransactions',
-        Component: MyTransactions
+        element: <PrivateRoute><MyTransactions></MyTransactions></PrivateRoute>
       },
       {
         path: '/register',
@@ -42,11 +43,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/addTransaction',
-        element: <AddTransaction></AddTransaction>
+        element: <PrivateRoute><AddTransaction></AddTransaction></PrivateRoute>
       },
       {
         path: '/reports',
-        element: <Reports></Reports>
+        element: <PrivateRoute><Reports></Reports></PrivateRoute>
       },
       {
         path: '/transactionDetails/:id',
