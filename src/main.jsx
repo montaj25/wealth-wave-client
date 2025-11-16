@@ -18,6 +18,7 @@ import UpdatedTransaction from './pages/UpdatedTransaction.jsx';
 import Profile from './pages/Profile.jsx';
 import PrivateRoute from './Routes/PrivateRoute.jsx';
 import DetailsPage from './pages/DetailsPage.jsx';
+import Loading from './pages/Loading.jsx';
 
 
 
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
+    hydrateFallbackElement: <Loading></Loading>,
     children: [
       {
         index: true,
