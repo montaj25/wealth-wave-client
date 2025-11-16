@@ -17,6 +17,7 @@ import Details from './pages/Details.jsx';
 import UpdatedTransaction from './pages/UpdatedTransaction.jsx';
 import Profile from './pages/Profile.jsx';
 import PrivateRoute from './Routes/PrivateRoute.jsx';
+import DetailsPage from './pages/DetailsPage.jsx';
 
 
 
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: '/profile',
         element: <PrivateRoute><Profile></Profile></PrivateRoute>
+      },
+      {
+        path: '/detailsPage',
+        Component: DetailsPage
       },
       {
         path: '*',

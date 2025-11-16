@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const HeroBanner = () => {
     return (
@@ -22,8 +23,8 @@ const HeroBanner = () => {
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                        <button className="btn btn-primary px-8">Get Started</button>
-                        <button className="btn btn-outline px-8">Learn More</button>
+                        <Link to='/register' className="btn btn-primary px-8">Get Started</Link>
+                        <Link to='/detailsPage' className="btn btn-outline px-8">Learn More</Link>
                     </div>
                 </div>
 
