@@ -1,10 +1,52 @@
-import React, { use } from 'react';
+import React, { use, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { Link } from 'react-router';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import Swal from 'sweetalert2';
 
 const Login = () => {
+    const [showPassword, setShowPassword] = useState(false)
 
-    const { signInWithGoogle } = use(AuthContext)
+    const { signInWithGoogle, signInUser } = use(AuthContext)
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        // console.log(email, password)
+        signInUser(email, password)
+            .then(result => {
+                const loggedUser = {
+                    name: result.user.displayName || '',
+                    email: result.user.email || '',
+                    image: result.user.photoURL || '',
+
+                }
+
+                // save db
+                fetch("http://localhost:3000/users", {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': "application/json"
+                    },
+                    body: JSON.stringify(loggedUser)
+                })
+                Swal.fire({
+                    icon: "success",
+                    title: "Login Successful!",
+                });
+            })
+            .catch((error) => {
+                console.log(error)
+                Swal.fire({
+                    icon: "error",
+                    title: "Login Failed!",
+                    text: "Incorrect email or password!",
+                });
+            });
+
+    }
 
     const handleGoogleSignIn = () => {
         signInWithGoogle()
@@ -14,6 +56,7 @@ const Login = () => {
                     name: result.user.displayName,
                     email: result.user.email,
                     image: result.user.photoURL,
+                    googleUser: true
                 }
 
                 //create  user in the database
@@ -25,15 +68,27 @@ const Login = () => {
                     body: JSON.stringify(newUser)
                 })
                     .then(res => res.json())
-                    .then(data => {
-                        console.log('data after user save', data)
+                    .then(() => {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Google Login Successful!",
+                        });
                     })
 
 
             })
             .catch(error => {
                 console.log(error)
+                Swal.fire({
+                    icon: "error",
+                    title: "Google Login Failed!",
+                });
             })
+    }
+
+    const handleTogglePasswordShow = (e) => {
+        e.preventDefault();
+        setShowPassword(!showPassword);
     }
 
     return (
@@ -41,14 +96,19 @@ const Login = () => {
         <div className="card bg-base-200 w-full mx-auto max-w-sm shrink-0 shadow-2xl mt-16">
             <h1 className="text-5xl font-bold text-center my-8">Login now!</h1>
             <div className="card-body">
-                <form>
+                <form onSubmit={handleLogin}>
                     <fieldset className="fieldset">
                         <label className="label">Email</label>
-                        <input type="email" className="input" placeholder="Email" />
-                        <label className="label">Password</label>
-                        <input type="password" className="input" placeholder="Password" />
-                        <div><a className="link link-hover">Forgot password?</a></div>
-                        <button className="btn btn-neutral mt-4">Login</button>
+                        <input type="email" name='email' className="input" placeholder="Email" />
+                        <div className='relative'>
+                            <label className="label">Password</label>
+                            <input type={showPassword ? 'text' : 'password'} name='password' className="input" placeholder="Password" />
+                            <button
+                                onClick={handleTogglePasswordShow}
+                                className="btn btn-xs bottom-2 right-6 absolute">
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}</button>
+                        </div>
+                        <button type='submit' className="btn btn-neutral mt-4">Login</button>
                     </fieldset>
                 </form>
                 <p>Haven't Any Account? please <Link to='/register'><span className='text-primary'>Register</span></Link> </p>
